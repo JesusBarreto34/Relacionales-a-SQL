@@ -1,11 +1,10 @@
--- 1. TABLA CATEGORY
+
 CREATE TABLE CATEGORY (
     Categoryid INT PRIMARY KEY,
     Categoryname VARCHAR(50) NOT NULL,
     Description TEXT
 );
 
--- 2. TABLA SUPPLIER
 CREATE TABLE SUPPLIER (
     Supplierid INT PRIMARY KEY,
     Companyname VARCHAR(100) NOT NULL,
@@ -16,14 +15,13 @@ CREATE TABLE SUPPLIER (
     Fax VARCHAR(25)
 );
 
--- 3. TABLA SHIPPER
 CREATE TABLE SHIPPER (
     Orderid INT PRIMARY KEY,
     Companyname VARCHAR(100) NOT NULL,
     Phone VARCHAR(25)
 );
 
--- 4. TABLA ENTITY (Direcciones)
+
 CREATE TABLE Entity (
     Addressid INT PRIMARY KEY,
     Postalcode VARCHAR(15),
@@ -31,7 +29,7 @@ CREATE TABLE Entity (
     Addressline2 VARCHAR(150)
 );
 
--- 5. TABLA CUSTOMER
+
 CREATE TABLE CUSTOMER (
     Customerid INT PRIMARY KEY,
     Companyname VARCHAR(100) NOT NULL,
@@ -44,7 +42,6 @@ CREATE TABLE CUSTOMER (
         FOREIGN KEY (Addressid) REFERENCES Entity(Addressid)
 );
 
--- 6. TABLA EMPLOYEE (Incluye la auto-relación REPORT_TO)
 CREATE TABLE EMPLOYEE (
     Employeeid INT PRIMARY KEY,
     Firstname VARCHAR(50) NOT NULL,
@@ -56,7 +53,7 @@ CREATE TABLE EMPLOYEE (
         FOREIGN KEY (ReportsTo) REFERENCES EMPLOYEE(Employeeid)
 );
 
--- 7. TABLA PRODUCT
+
 CREATE TABLE PRODUCT (
     Productid INT PRIMARY KEY,
     Productname VARCHAR(100) NOT NULL,
@@ -72,7 +69,7 @@ CREATE TABLE PRODUCT (
         FOREIGN KEY (Supplierid) REFERENCES SUPPLIER(Supplierid)
 );
 
--- 8. TABLA ORDERS
+
 CREATE TABLE ORDERS (
     Orderid INT PRIMARY KEY,
     Orderdate DATE NOT NULL,
@@ -89,8 +86,7 @@ CREATE TABLE ORDERS (
         FOREIGN KEY (ShipperOrderid) REFERENCES SHIPPER(Orderid)
 );
 
--- 9. TABLA DETAILS (Relación N:M entre PRODUCT y ORDERS)
--- Nota: 'Total' es un atributo derivado/calculado (Quantity * Unitprice * (1 - Discount))
+
 CREATE TABLE DETAILS (
     Productid INT NOT NULL,
     Orderid INT NOT NULL,
@@ -98,10 +94,8 @@ CREATE TABLE DETAILS (
     Unitprice DECIMAL(10,2) NOT NULL,
     Discount DECIMAL(4,2) DEFAULT 0.00,
     
-    -- Clave Primaria Compuesta
     CONSTRAINT PK_Details PRIMARY KEY (Productid, Orderid),
     
-    -- Claves Foráneas
     CONSTRAINT FK_Details_Product 
         FOREIGN KEY (Productid) REFERENCES PRODUCT(Productid),
     CONSTRAINT FK_Details_Orders 
