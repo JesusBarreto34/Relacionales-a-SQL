@@ -1,5 +1,4 @@
--- 1. Tabla OFICINA
--- (Se crea primero para poder hacer referencia a ella en Representante)
+
 CREATE TABLE Oficina (
     oficina_id INT IDENTITY(1,1) PRIMARY KEY,
     ciudad VARCHAR(30) NOT NULL,
@@ -9,7 +8,7 @@ CREATE TABLE Oficina (
     representante_id INT NOT NULL
 );
 
--- 2. Tabla REPRESENTANTE
+
 CREATE TABLE Representante (
     representante_id INT IDENTITY(1,1) PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
@@ -23,19 +22,16 @@ CREATE TABLE Representante (
     representante_id_jefe INT NULL,
     oficina_id INT NULL,
     
-    -- Claves foráneas asociadas
     CONSTRAINT FK_Representante_Jefe 
         FOREIGN KEY (representante_id_jefe) REFERENCES Representante(representante_id),
     CONSTRAINT FK_Representante_Oficina 
         FOREIGN KEY (oficina_id) REFERENCES Oficina(oficina_id)
 );
 
--- Añadir FK de Oficina hacia Representante (para resolver la relación circular)
 ALTER TABLE Oficina
 ADD CONSTRAINT FK_Oficina_Representante 
 FOREIGN KEY (representante_id) REFERENCES Representante(representante_id);
 
--- 3. Tabla CLIENTE
 CREATE TABLE Cliente (
     cliente_id INT IDENTITY(1,1) PRIMARY KEY,
     empresa VARCHAR(30) NOT NULL,
@@ -46,7 +42,6 @@ CREATE TABLE Cliente (
         FOREIGN KEY (representante_id) REFERENCES Representante(representante_id)
 );
 
--- 4. Tabla PRODUCTO
 CREATE TABLE Producto (
     producto_id CHAR(5) NOT NULL,
     fab_id CHAR(3) NOT NULL,
@@ -57,7 +52,6 @@ CREATE TABLE Producto (
     CONSTRAINT PK_Producto PRIMARY KEY (producto_id, fab_id)
 );
 
--- 5. Tabla PEDIDO
 CREATE TABLE Pedido (
     pedido_id INT IDENTITY(1,1) PRIMARY KEY,
     fecha_pedido DATE NOT NULL,
@@ -70,7 +64,6 @@ CREATE TABLE Pedido (
         FOREIGN KEY (representante_id) REFERENCES Representante(representante_id)
 );
 
--- 6. Tabla DETALLE_PEDIDO
 CREATE TABLE detalle_pedido (
     pedido_id INT NOT NULL,
     producto_id CHAR(5) NOT NULL,
@@ -78,10 +71,10 @@ CREATE TABLE detalle_pedido (
     cantidad INT NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
 
-    -- Clave Primaria Compuesta
+    
     CONSTRAINT PK_Detalle_Pedido PRIMARY KEY (pedido_id, producto_id, fab_id),
 
-    -- Claves Foráneas
+   
     CONSTRAINT FK_Detalle_Pedido_Pedido 
         FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
     CONSTRAINT FK_Detalle_Pedido_Producto 
