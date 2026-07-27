@@ -7,18 +7,21 @@ CREATE TABLE Alumno (
     Correo VARCHAR(100),
     FechaNaci DATE
 );
+GO
 
 CREATE TABLE Departamento (
     NumDep INT PRIMARY KEY,
     Nombredep VARCHAR(50),
     Edificio VARCHAR(50)
 );
+GO
 
 CREATE TABLE Proyecto (
     NumProy INT PRIMARY KEY,
     Nombre VARCHAR(100),
     Presupuesto DECIMAL(12,2)
 );
+GO
 
 
 
@@ -31,6 +34,8 @@ CREATE TABLE Telefono (
     CONSTRAINT FK_Telefono_Alumno FOREIGN KEY (Matricula) REFERENCES Alumno(Matricula)
 );
 
+GO
+
 CREATE TABLE Credencial (
     NumeroCredenecial INT PRIMARY KEY,
     FechaExp DATE,
@@ -39,6 +44,7 @@ CREATE TABLE Credencial (
     
     CONSTRAINT FK_Credencial_Alumno FOREIGN KEY (Matricula) REFERENCES Alumno(Matricula)
 );
+GO
 
 CREATE TABLE Profesor (
     NumProf INT PRIMARY KEY,
@@ -49,6 +55,7 @@ CREATE TABLE Profesor (
     
     CONSTRAINT FK_Profesor_Departamento FOREIGN KEY (Numdep) REFERENCES Departamento(NumDep)
 );
+GO
 
 
 
@@ -61,6 +68,7 @@ CREATE TABLE Dependiente (
     CONSTRAINT PK_Dependiente PRIMARY KEY (NombreDep, NumProf),
     CONSTRAINT FK_Dependiente_Profesor FOREIGN KEY (NumProf) REFERENCES Profesor(NumProf)
 );
+GO
 
 CREATE TABLE Materia (
     ClaveMateria VARCHAR(20) PRIMARY KEY,
@@ -70,6 +78,7 @@ CREATE TABLE Materia (
     
     CONSTRAINT FK_Materia_Profesor FOREIGN KEY (Numprof) REFERENCES Profesor(NumProf)
 );
+GO
 
 CREATE TABLE Participa (
     NumProf INT NOT NULL,
@@ -80,6 +89,7 @@ CREATE TABLE Participa (
     CONSTRAINT FK_Participa_Profesor FOREIGN KEY (NumProf) REFERENCES Profesor(NumProf),
     CONSTRAINT FK_Participa_Proyecto FOREIGN KEY (NumProj) REFERENCES Proyecto(NumProy)
 );
+GO
 
 
 CREATE TABLE Cursa (
@@ -92,3 +102,4 @@ CREATE TABLE Cursa (
     CONSTRAINT FK_Cursa_Alumno FOREIGN KEY (Matricula) REFERENCES Alumno(Matricula),
     CONSTRAINT FK_Cursa_Materia FOREIGN KEY (ClaveMat) REFERENCES Materia(ClaveMateria)
 );
+GO
