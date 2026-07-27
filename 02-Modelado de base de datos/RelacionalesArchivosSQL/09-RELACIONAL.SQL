@@ -1,4 +1,3 @@
-
 CREATE TABLE CATEGORY (
     Categoryid INT PRIMARY KEY,
     Categoryname VARCHAR(50) NOT NULL,
