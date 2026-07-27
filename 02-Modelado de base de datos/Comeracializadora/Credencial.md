@@ -3,7 +3,6 @@
 ```SQL
 # Imagenes De Relacionales Credencial
 
--- 1. Tablas independientes (Sin claves foráneas)
 
 CREATE TABLE Alumno (
     Matricula INT PRIMARY KEY,
@@ -26,7 +25,7 @@ CREATE TABLE Proyecto (
     Presupuesto DECIMAL(12,2)
 );
 
--- 2. Tablas de primer nivel de dependencia
+
 
 CREATE TABLE Telefono (
     ClaveTel INT NOT NULL,
@@ -56,7 +55,7 @@ CREATE TABLE Profesor (
     CONSTRAINT FK_Profesor_Departamento FOREIGN KEY (Numdep) REFERENCES Departamento(NumDep)
 );
 
--- 3. Tablas de segundo nivel de dependencia
+
 
 CREATE TABLE Dependiente (
     NombreDep VARCHAR(50) NOT NULL,
@@ -87,7 +86,7 @@ CREATE TABLE Participa (
     CONSTRAINT FK_Participa_Proyecto FOREIGN KEY (NumProj) REFERENCES Proyecto(NumProy)
 );
 
--- 4. Tablas de tercer nivel de dependencia
+
 
 CREATE TABLE Cursa (
     Matricula INT NOT NULL,
